@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../../assets/images/darkLogo.png";
+import Logo from "../../assets/images/DarkLogo.png";
 import style from "./Footer.module.css";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 
