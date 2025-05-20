@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { UserContext } from "../../Context/UserProvider";
+import { UserContext } from "../../context/UserProvider";
 import axiosInstance from "../../API/axios";
 import styles from "./QuestionDetail.module.css";
-import { QuestionContext } from "../../Context/QuestionProvider";
+import { QuestionContext } from "../../context/QuestionProvider";
 import DOMPurify from "dompurify";
 import "quill/dist/quill.snow.css";
 import Quill from "quill";
