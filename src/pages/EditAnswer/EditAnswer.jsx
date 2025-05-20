@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "../../API/axios";
 import styles from "./EditAnswer.module.css";
-import { UserContext } from "../../Context/UserProvider";
+import { UserContext } from "../../context/UserProvider";
 import DOMPurify from "dompurify";
 import "quill/dist/quill.snow.css";
 import Quill from "quill";

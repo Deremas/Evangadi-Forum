@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { UserContext } from "./Context/UserProvider"; // Adjust the import path
+import { UserContext } from "./context/UserProvider"; // Adjust the import path
 import {
   Route,
   Routes,
@@ -55,6 +55,7 @@ function App() {
       });
       setUser({ user_name: data.user_name, user_id: data.user_id });
     } catch (error) {
+      console.error("Authentication error:", error.message);
       setUser(null);
       setError("Failed to authenticate. Please log in again.");
       navigate("/users/login");

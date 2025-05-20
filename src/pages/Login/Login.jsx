@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styles from "./Login.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../../Context/UserProvider"; // Import UserContext
+import { UserContext } from "../../context/UserProvider"; // Import UserContext
 import axiosInstance from "../../API/axios";
 import { ClipLoader } from "react-spinners";
 

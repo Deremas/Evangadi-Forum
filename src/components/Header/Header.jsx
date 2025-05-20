@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { UserContext } from "../../Context/UserProvider";
+import { UserContext } from "../../context/UserProvider";
 import styles from "./Header.module.css";
 import Logo from "../../assets/images/DarkLogo.png";
 import { FiMenu } from "react-icons/fi"; // Menu icon
 
 function Header() {
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
   const [user, setUser] = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const token = localStorage.getItem("token"); // Retrieve token from localStorage
@@ -43,7 +43,11 @@ function Header() {
           <FiMenu size={35} />
         </div>
 
-        <nav className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
+        <nav
+          className={`${styles.navLinks} ${
+            menuOpen ? styles.open : styles.closed
+          }`}
+        >
           <ul className={styles.navList}>
             <li>
               <Link

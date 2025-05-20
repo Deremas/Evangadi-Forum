@@ -1,83 +1,121 @@
-import React, { useRef, useState } from "react";
-import Style from "./ForgetPassword.module.css";
-import { Link, useNavigate } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
-import axiosInstance from "../../API/axios";
+  import React, { useRef, useState } from "react";
+  import Style from "./ForgetPassword.module.css";
+  import { Link, useNavigate } from "react-router-dom";
+  import { ClipLoader } from "react-spinners";
+  import axiosInstance from "../../API/axios";
 
-function ForgetPassword() {
-  const emailDom = useRef(null);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  function ForgetPassword() {
+    const emailDom = useRef(null);
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
-  // Submit form handler
-async function handleSubmit(e) {
-  e.preventDefault();
-  const emailValue = emailDom.current.value.trim();
+    // Submit form handler
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const emailValue = emailDom.current.value.trim();
 
-  if (!emailValue) {
-    setError("An email is required");
-    return;
+    if (!emailValue) {
+      setError("An email is required");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await axiosInstance.post("/users/forget-password", {
+        email: emailValue,
+      });
+
+      setLoading(false);
+      alert(response.data.msg); // Show success message
+    } catch (err) {
+      setLoading(false);
+      setError(
+        err.response?.data?.msg || "Something went wrong, please try again."
+      );
+      console.error("Error:", err.response?.data?.msg || err.message);
+    }
   }
 
-  setLoading(true);
-  try {
-    const response = await axiosInstance.post("/users/forget-password", {
-      email: emailValue,
-    });
+    return (
+      <section className={Style.container}>
+        <div className={Style.card}>
+          <h3>Reset your password</h3>
+          <p className={Style.instruction}>
+            Enter your email address below, and we will send you an email with
+            instructions to reset your password.
+          </p>
 
-    setLoading(false);
-    alert(response.data.msg); // Show success message
-  } catch (err) {
-    setLoading(false);
-    setError(
-      err.response?.data?.msg || "Something went wrong, please try again."
-    );
-    console.error("Error:", err.response?.data?.msg || err.message);
-  }
-}
+          <form onSubmit={handleSubmit}>
+            <input
+              ref={emailDom}
+              type="email"
+              placeholder="Email address"
+              className={error ? Style.inputError : Style.input}
+            />
+            {error && <p className={Style.error}>{error}</p>}
 
-  return (
-    <section className={Style.container}>
-      <div className={Style.card}>
-        <h3>Reset your password</h3>
-        <p className={Style.instruction}>
-          Enter your email address below, and we will send you an email with
-          instructions to reset your password.
-        </p>
+            <button className={Style.button} type="submit" disabled={loading}>
+              {loading ? (
+                <div className={Style.loading}>
+                  <ClipLoader color="#fff" size={12} />
+                  <span>Sending...</span>
+                </div>
+              ) : (
+                "Reset your password"
+              )}
+            </button>
+          </form>
 
-        <form onSubmit={handleSubmit}>
-          <input
-            ref={emailDom}
-            type="email"
-            placeholder="Email address"
-            className={error ? Style.inputError : Style.input}
-          />
-          {error && <p className={Style.error}>{error}</p>}
-
-          <button className={Style.button} type="submit" disabled={loading}>
-            {loading ? (
-              <div className={Style.loading}>
-                <ClipLoader color="#fff" size={12} />
-                <span>Sending...</span>
-              </div>
-            ) : (
-              "Reset your password"
-            )}
-          </button>
-        </form>
-
-        <div className={Style.linkContainer}>
-          <Link to="/users/login" className={Style.link}>
-            Already have an account?
-          </Link>
-          <Link to="/users/register" className={Style.link}>
-            Don't have an account?
-          </Link>
+          <div className={Style.linkContainer}>
+            <Link to="/users/login" className={Style.link}>
+              Already have an account?
+            </Link>
+            <Link to="/users/register" className={Style.link}>
+              Don't have an account?
+            </Link>
+          </div>
         </div>
-      </div>
-    </section>
-  );
-}
+      </section>
+    );
+  }
 
-export default ForgetPassword;
+  export default ForgetPassword;
+
+// import { useState } from "react";
+// import { useSearchParams } from "react-router-dom";
+// import axios from "axios";
+// import { Box, Input, Button, useToast } from "@chakra-ui/react";
+
+// const ForgetPassword = () => {
+//   const [searchParams] = useSearchParams();
+//   const token = searchParams.get("token");
+//   const [newPassword, setNewPassword] = useState("");
+//   const toast = useToast();
+
+//   const handleSubmit = async () => {
+//     try {
+//       await axios.post("http://localhost:5000/reset-password", {
+//         token,
+//         newPassword,
+//       });
+//       toast({ title: "Password reset successful", status: "success" });
+//     } catch (error) {
+//       toast({ title: "Reset failed", status: "error" });
+//     }
+//   };
+
+//   return (
+//     <Box>
+//       <Input
+//         type="password"
+//         placeholder="Enter new password"
+//         value={newPassword}
+//         onChange={(e) => setNewPassword(e.target.value)}
+//       />
+//       <Button onClick={handleSubmit}>Reset Password</Button>
+//     </Box>
+//   );
+// };
+
+// export default ForgetPassword;
