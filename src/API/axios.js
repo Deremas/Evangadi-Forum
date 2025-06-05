@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://evangadi-forum-starter-pw48.onrender.com/api",
+  baseURL: process.env.BACKEND_API_BASE_URL,
+  // baseURL: "https://evangadi-forum-starter-pw48.onrender.com/api",
   // baseURL: "http://localhost:3456/api",
 });
 
